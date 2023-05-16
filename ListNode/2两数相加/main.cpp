@@ -1,0 +1,51 @@
+// 将本main.cpp拷贝至根目录下使用
+
+#include <iostream>
+#include "ListNode/LIstNode.h"
+#include "ListNode/LinkedListUtils.h" // 包含头文件声明
+
+using namespace std;
+class Solution {
+public:
+    static ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        // 初始化个位节点，先不做进位
+        ListNode* newPoint = new ListNode(l1->val + l2->val);
+
+        // tp用来遍历节点
+        ListNode* tp = newPoint;
+
+        // l1,l2只要后面还有节点，就继续往后遍历；或者新链表还需要继续往后进位
+        while (l1 && l1->next || l2 && l2->next || tp->val > 9) {
+            l1 = l1 ? l1->next : nullptr;
+            l2 = l2 ? l2->next : nullptr;
+            // 计算下个节点的和，先不考虑这个节点是否进位
+            int tmpsum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
+            // 计算新链表下个节点的值（当前节点的进位+当前l1 l2的值之和），先不做进位，使用整除运算符"//"表示整除，抛弃余数，用于进位
+            tp->next = new ListNode(tp->val / 10 + tmpsum);
+            // 新链表当前节点的值取个位
+            tp->val %= 10;
+            // 新链表往后遍历一个节点
+            tp = tp->next;
+        }
+
+        return newPoint;
+    }
+};
+
+int main() {
+    vector<int> l1_vec = {2, 4, 3};
+    vector<int> l2_vec = {5, 6, 4};
+
+    ListNode* l1 = create_linklist_tail(l1_vec);
+    ListNode* l2 = create_linklist_tail(l2_vec);
+
+    ListNode* res = Solution::addTwoNumbers(l1, l2);
+
+    while (res) {
+        cout << res->val << " ";
+        res = res->next;
+    }
+    cout << endl;
+
+    return 0;
+}
