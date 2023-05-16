@@ -1,0 +1,47 @@
+// 将本main.cpp的内容拷贝至根目录下的main.cpp中使用
+
+#include <iostream>
+#include "ListNode/LIstNode.h"
+#include "ListNode/LinkedListUtils.h" // 包含头文件声明
+
+using namespace std;
+
+class Solution : public BaseSolution {
+public:
+    ListNode *removeNthFromEnd(ListNode *head, int n) {
+        // Create a dummy node
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+
+        ListNode *slow = dummy;
+        ListNode *fast = dummy;
+        // Move fast pointer n+1 steps ahead
+        for (int i = 0; i < n + 1; i++) {
+            fast = fast->next;
+        }
+        // Move both slow and fast pointers until fast reaches the end of the list
+        while (fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        // Remove the nth node from the end
+        slow->next = slow->next->next;
+
+        // Store the head and delete the dummy node
+        head = dummy->next;
+        delete dummy;
+
+        return head;
+    }
+};
+
+int main() {
+    Solution sol;
+    BaseSolution baseSol;
+    ListNode *head = baseSol.createLinkedList({1, 2, 3, 4, 5});
+
+    ListNode *res = sol.removeNthFromEnd(head, 2);
+    baseSol.printLinkedList(res);
+
+    return 0;
+}
