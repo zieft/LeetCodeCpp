@@ -5,7 +5,7 @@
 #include "ListNode/LinkedListUtils.h" // 包含头文件声明
 
 using namespace std;
-class Solution {
+class Solution : public BaseSolution {
 public:
     static ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         // 初始化个位节点，先不做进位
@@ -33,11 +33,12 @@ public:
 };
 
 int main() {
+    Solution sol;
     vector<int> l1_vec = {2, 4, 3};
     vector<int> l2_vec = {5, 6, 4};
 
-    ListNode* l1 = create_linklist_tail(l1_vec);
-    ListNode* l2 = create_linklist_tail(l2_vec);
+    ListNode* l1 = sol.create_linklist_tail(l1_vec);
+    ListNode* l2 = sol.create_linklist_tail(l2_vec);
 
     ListNode* res = Solution::addTwoNumbers(l1, l2);
 
@@ -50,6 +51,7 @@ int main() {
     sol.releaseLinkedList(l1);
     sol.releaseLinkedList(l2);
     sol.releaseLinkedList(res);
+
 
     return 0;
 }
