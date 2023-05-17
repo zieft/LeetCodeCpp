@@ -43,5 +43,8 @@ int main() {
     ListNode *res = sol.removeNthFromEnd(head, 2);
     baseSol.printLinkedList(res);
 
+        sol.releaseLinkedList(head);
+        sol.releaseLinkedList(res);
+
     return 0;
 }

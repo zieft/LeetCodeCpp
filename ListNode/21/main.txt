@@ -39,8 +39,12 @@ int main() {
     ListNode *l1 = sol.createLinkedList({1, 2, 4});
     ListNode *l2 = sol.createLinkedList({1, 3, 4});
 
-    ListNode *res = sol.mergeTwoLists(l1, l2);
+    ListNode *res = sol.mergeTwoLists_recursive(l1, l2);
     sol.printLinkedList(res);
+
+    sol.releaseLinkedList(l1);
+    sol.releaseLinkedList(l2);
+    sol.releaseLinkedList(res);
 
     return 0;
 }

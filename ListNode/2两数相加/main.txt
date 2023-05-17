@@ -47,5 +47,9 @@ int main() {
     }
     cout << endl;
 
+    sol.releaseLinkedList(l1);
+    sol.releaseLinkedList(l2);
+    sol.releaseLinkedList(res);
+
     return 0;
 }
