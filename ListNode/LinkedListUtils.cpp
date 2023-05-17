@@ -39,3 +39,13 @@ void BaseSolution::printLinkedList(ListNode* head) {
     }
     std::cout << std::endl;
 }
+
+// 释放链表内存
+void BaseSolution::releaseLinkedList(ListNode *head) {
+    ListNode* curr = head;
+    while (curr) {
+        ListNode* temp = curr;
+        curr = curr->next;
+        delete temp;
+    }
+}

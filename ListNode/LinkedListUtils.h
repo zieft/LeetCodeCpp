@@ -14,6 +14,7 @@ public:
     ListNode* create_linklist_tail(vector<int>& li);  // 尾插法
     ListNode* createLinkedList(const std::vector<int>& arr); // 头插法
     void printLinkedList(ListNode* head);
+    void releaseLinkedList(ListNode* head);
 };
 
 #endif //LEETCODE_LINKEDLISTUTILS_H
