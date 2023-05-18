@@ -1,0 +1,81 @@
+// 将本main.cpp的内容拷贝至根目录下的main.cpp中使用
+
+#include <iostream>
+#include <queue>
+#include "ListNode/LIstNode.h"
+#include "ListNode/LinkedListUtils.h" // 包含头文件声明
+
+using namespace std;
+
+class Solution : public BaseSolution {
+public:
+    ListNode *mergeKLists(std::vector<ListNode *> &lists) {
+/*
+ * 这段代码的时间复杂度取决于链表的总长度和链表的数量。假设链表的总长度为 N，链表的数量为 K。
+ *
+ * 构建优先队列（堆）的时间复杂度为 O(K logK)，其中 K 是链表的数量。这是因为插入一个元素到堆中的时间复杂度为 O(logK)，需要进行 K 次插入操作。
+ *
+ * 在 while 循环中，每次从堆中取出最小节点，并将其插入结果链表，然后将该节点的下一个节点插入堆中。
+ * 由于每个节点最多只会被插入堆一次，所以循环的迭代次数最多为 N。
+ * 每次从堆中取出最小节点的时间复杂度为 O(logK)，插入堆的时间复杂度也为 O(logK)。
+ * 因此，循环的总时间复杂度为 O(N logK)。
+ *
+ * 综上所述，该段代码的时间复杂度为 O(N logK)，其中 N 是链表的总长度，K 是链表的数量。
+ * 注意，这里假设插入和弹出堆的操作的时间复杂度为 O(logK)，堆的大小最多为 K。
+ * 如果采用自定义堆的实现，可以优化这部分的时间复杂度。
+ *
+ * 空间复杂度方面，该代码使用了一个优先队列（堆）来存储节点，其空间复杂度为 O(K)。
+ * 除此之外，还使用了常数级别的额外空间。因此，整体的空间复杂度为 O(K)。
+ * */
+        auto compare = [](const ListNode *a, const ListNode *b) {
+            return a->val > b->val;
+        };
+        /*
+           lambda 函数的主体部分是一个比较表达式 a->val > b->val，它比较了两个指针所指向的 ListNode 对象的 val 值的大小。
+           返回值为 bool 类型，如果 a->val 大于 b->val，则返回 true，表示 a 在堆中应该排在 b 前面，否则返回 false。
+        */
+        // 实例化priority_queue对象
+        // priority_queue默认大根堆，decltype(compare)可将其转换成小根堆。python中的heapq默认就是小根堆，无需转换
+        std::priority_queue<ListNode *, std::vector<ListNode *>, decltype(compare)> minHeap(compare);
+
+        ListNode dummy(0);  // 新建链表的虚拟头节点
+        ListNode *p = &dummy;  // p是个指针，指向新建链表的当前位置
+
+        // 维护一个堆，存储各个链表的当前节点
+        for (ListNode *list: lists) {
+            if (list) {
+                minHeap.push(list);
+            }
+        }
+
+        while (!minHeap.empty()) {
+            ListNode *curr = minHeap.top();  // 堆中的最小节点
+            minHeap.pop();
+
+            p->next = curr;  // 链入新链表
+            p = p->next;  // 移动指针
+
+            if (curr->next) {
+                minHeap.push(curr->next);  // 将当前链表的下一个节点压入堆
+            }
+        }
+
+        return dummy.next;  // 返回合并后链表的头部（去除虚拟头节点）
+    }
+};
+
+int main() {
+    Solution sol;
+    BaseSolution baseSol;
+    ListNode *l1 = baseSol.createLinkedList({1, 4, 5});
+    ListNode *l2 = baseSol.createLinkedList({1, 3, 4});
+    ListNode *l3 = baseSol.createLinkedList({2, 6});
+
+    std::vector<ListNode *> lists = {l1, l2, l3};
+    ListNode *res = sol.mergeKLists(lists);
+    sol.printLinkedList(res);
+    sol.releaseLinkedList(res);
+
+    return 0;
+}
+
