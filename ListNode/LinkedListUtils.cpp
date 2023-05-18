@@ -49,3 +49,39 @@ void BaseSolution::releaseLinkedList(ListNode *head) {
         delete temp;
     }
 }
+
+// 释放含有环的链表内存
+void BaseSolution::freeCycledLinkedList(ListNode *head) {
+    if (!head) {
+        return;
+    }
+
+    // 找到环的入口节点，参考141题
+    ListNode *fast = head;
+    ListNode *slow = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            break;
+        }
+    }
+
+    if (fast && fast->next) {
+        // 存在环，断开环
+        ListNode *entry = head;
+        while (entry != slow) {
+            entry = entry->next;
+            slow = slow->next;
+        }
+        // 环的入口节点的 next 指针设置为 nullptr
+        slow->next = nullptr;
+    }
+
+    // 释放单链表的内存
+    ListNode *current = head;
+    while (current) {
+        ListNode *nextNode = current->next;
+        delete current;
+        current = nextNode;
+    }}

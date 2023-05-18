@@ -2,6 +2,7 @@
 // Created by zieft on 2023/5/16.
 //
 #include <vector>
+
 #ifndef LEETCODE_LINKEDLISTUTILS_H
 #define LEETCODE_LINKEDLISTUTILS_H
 
@@ -11,10 +12,11 @@ using namespace std;
 
 class BaseSolution {
 public:
-    ListNode* create_linklist_tail(vector<int>& li);  // 尾插法
-    ListNode* createLinkedList(const std::vector<int>& arr); // 头插法
-    void printLinkedList(ListNode* head);
-    void releaseLinkedList(ListNode* head);
+    ListNode *create_linklist_tail(vector<int> &li);  // 尾插法
+    ListNode *createLinkedList(const std::vector<int> &arr); // 头插法
+    void printLinkedList(ListNode *head);
+    void releaseLinkedList(ListNode *head);
+    void freeCycledLinkedList(ListNode *head);
 };
 
 #endif //LEETCODE_LINKEDLISTUTILS_H
