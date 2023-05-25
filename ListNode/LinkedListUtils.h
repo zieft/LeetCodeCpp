@@ -14,9 +14,11 @@ class BaseSolution {
 public:
     ListNode *create_linklist_tail(vector<int> &li);  // 尾插法
     ListNode *createLinkedList(const std::vector<int> &arr); // 头插法
+    ListNode *createLinkListWithCircle(vector<int> &li, int pos);
     void printLinkedList(ListNode *head);
     void releaseLinkedList(ListNode *head);
     void freeCycledLinkedList(ListNode *head);
+
 };
 
 #endif //LEETCODE_LINKEDLISTUTILS_H

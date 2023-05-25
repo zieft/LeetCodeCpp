@@ -4,22 +4,22 @@
 #include <iostream>
 #include "LinkedListUtils.h"
 
-ListNode* BaseSolution::create_linklist_tail(vector<int>& li) {
-    ListNode* head = new ListNode(li[0]);
-    ListNode* tail = head;
+ListNode *BaseSolution::create_linklist_tail(vector<int> &li) {
+    ListNode *head = new ListNode(li[0]);
+    ListNode *tail = head;
     for (int i = 1; i < li.size(); i++) {
-        ListNode* node = new ListNode(li[i]);
+        ListNode *node = new ListNode(li[i]);
         tail->next = node;
         tail = node;
     }
     return head;
 }
 
-ListNode* BaseSolution::createLinkedList(const vector<int>& arr) {
-    ListNode* head = nullptr;
-    ListNode* tail = nullptr;
-    for (int i : arr) {
-        ListNode* newNode = new ListNode(i);
+ListNode *BaseSolution::createLinkedList(const vector<int> &arr) {
+    ListNode *head = nullptr;
+    ListNode *tail = nullptr;
+    for (int i: arr) {
+        ListNode *newNode = new ListNode(i);
         if (!head) {
             head = newNode;
             tail = newNode;
@@ -31,8 +31,8 @@ ListNode* BaseSolution::createLinkedList(const vector<int>& arr) {
     return head;
 }
 
-void BaseSolution::printLinkedList(ListNode* head) {
-    ListNode* curr = head;
+void BaseSolution::printLinkedList(ListNode *head) {
+    ListNode *curr = head;
     while (curr) {
         std::cout << curr->val << " ";
         curr = curr->next;
@@ -40,11 +40,34 @@ void BaseSolution::printLinkedList(ListNode* head) {
     std::cout << std::endl;
 }
 
+ListNode *BaseSolution::createLinkListWithCircle(vector<int> &li, int pos) {
+    ListNode *head = new ListNode(li[0]);
+    ListNode *tail = head;
+    int length = li.size();
+    ListNode *first_in_circle = nullptr;
+
+    for (int i = 1; i < length; i++) {
+        ListNode *node = new ListNode(li[i]);
+        tail->next = node;
+        tail = node;
+
+        if (i == pos) {
+            first_in_circle = tail;
+        }
+
+        if (i == length - 1) {
+            tail->next = first_in_circle;
+        }
+    }
+
+    return head;
+}
+
 // 释放链表内存
 void BaseSolution::releaseLinkedList(ListNode *head) {
-    ListNode* curr = head;
+    ListNode *curr = head;
     while (curr) {
-        ListNode* temp = curr;
+        ListNode *temp = curr;
         curr = curr->next;
         delete temp;
     }
@@ -84,4 +107,5 @@ void BaseSolution::freeCycledLinkedList(ListNode *head) {
         ListNode *nextNode = current->next;
         delete current;
         current = nextNode;
-    }}
+    }
+}
