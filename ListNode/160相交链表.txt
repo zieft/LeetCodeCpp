@@ -1,0 +1,46 @@
+// 将本main.cpp的内容拷贝至根目录下的main.cpp中使用
+
+#include <iostream>
+#include "ListNode/LIstNode.h"
+#include "ListNode/LinkedListUtils.h" // 包含头文件声明
+
+using namespace std;
+
+class Solution : public BaseSolution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *pA = headA;
+        ListNode *pB = headB;
+
+        while (pA != pB) {
+            pA = pA ? pA->next : headB;
+            pB = pB ? pB->next : headA;
+        }
+
+        return pA;
+    }
+};
+
+int main() {
+    Solution sol;
+    std::vector<int> common_vec = {8, 4, 5};
+    ListNode *common = sol.create_linklist_tail(common_vec);
+
+    std::vector<int> a_vec = {4, 1};
+    ListNode *listA = sol.create_linklist_tail(a_vec);
+
+    std::vector<int> b_vec = {5, 6, 1};
+    ListNode *listB = sol.create_linklist_tail(b_vec);
+
+    sol.merge_linklist_at_tail(listA, common);
+    sol.merge_linklist_at_tail(listB, common);
+
+    ListNode *res = sol.getIntersectionNode(listA, listB);
+    cout << res->val << endl;
+
+    sol.releaseLinkedList(listB);
+    delete listA->next;
+    delete listA; // todo：更好释放listA内存的方法
+
+    return 0;
+}

@@ -18,7 +18,7 @@ public:
     void printLinkedList(ListNode *head);
     void releaseLinkedList(ListNode *head);
     void freeCycledLinkedList(ListNode *head);
-
+    void merge_linklist_at_tail(ListNode *old_list, ListNode *new_list);
 };
 
 #endif //LEETCODE_LINKEDLISTUTILS_H

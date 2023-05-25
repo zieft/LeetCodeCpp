@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include "LinkedListUtils.h"
+#include <unordered_set>
 
 ListNode *BaseSolution::create_linklist_tail(vector<int> &li) {
     ListNode *head = new ListNode(li[0]);
@@ -63,6 +64,14 @@ ListNode *BaseSolution::createLinkListWithCircle(vector<int> &li, int pos) {
     return head;
 }
 
+// 在链表尾部拼接另一个链表
+void BaseSolution::merge_linklist_at_tail(ListNode *old_list, ListNode *new_list) {
+    while (old_list && old_list->next) {
+        old_list = old_list->next;
+    }
+    old_list->next = new_list;
+}
+
 // 释放链表内存
 void BaseSolution::releaseLinkedList(ListNode *head) {
     ListNode *curr = head;
@@ -109,3 +118,4 @@ void BaseSolution::freeCycledLinkedList(ListNode *head) {
         current = nextNode;
     }
 }
+
