@@ -1,0 +1,65 @@
+// 将本main.cpp的内容拷贝至根目录下的main.cpp中使用
+
+#include <iostream>
+#include "ListNode/LIstNode.h"
+#include "ListNode/LinkedListUtils.h" // 包含头文件声明
+
+using namespace std;
+
+class Solution : public BaseSolution {
+public:
+    /*
+     *
+    时间复杂度分析：
+    首先，快慢指针同时从链表头部开始移动，直到它们相遇或快指针到达链表尾部。这个过程最多遍历整个链表，时间复杂度为 O(N)，其中 N 是链表的长度。
+    如果链表中不存在环，那么第一个 while 循环的时间复杂度是 O(N/2) = O(N)。
+    如果链表中存在环，那么第一个 while 循环会在环内部继续进行，直到快慢指针相遇。假设快慢指针相遇时，慢指针已经绕环 k 圈，那么快指针必然绕环 2k 圈。
+    由于快指针的速度是慢指针的两倍，所以总共移动的节点数是慢指针移动的节点数的两倍，即 2k。因此，第一个 while 循环的时间复杂度是 O(k)。
+    第二个 while 循环的时间复杂度是 O(k')，其中 k' 是从链表头部到环的入口节点的距离。
+    总体来说，算法的时间复杂度为 O(N + k + k')，其中 N 是链表的长度，k 是环内慢指针移动的节点数，k' 是从链表头部到环的入口节点的距离。
+
+    空间复杂度分析：
+    算法使用了常数级别的额外空间，主要是用来存储快慢指针，因此空间复杂度为 O(1)。
+
+    综上所述，该算法的时间复杂度为 O(N + k + k')，空间复杂度为 O(1)。
+     */
+    ListNode *detectCycle(ListNode *head) {
+        if (!head) {
+            return nullptr;
+        }
+
+        ListNode *slow = head;
+        ListNode *fast = head;
+
+        while (fast && fast->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+
+            if (fast == slow) {
+                break;
+            }
+        }
+
+        if (!fast || !fast->next) {
+            return nullptr;
+        }
+
+        fast = head;
+        while (fast != slow) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        return fast;
+    }
+};
+
+int main() {
+    Solution sol;
+    std::vector<int> li = {3, 2, 0, 4};
+    ListNode *head = sol.createLinkListWithCircle(li, 1);
+    std::cout << sol.detectCycle(head)->val << std::endl;
+    sol.freeCycledLinkedList(head);
+    return 0;
+}
+
